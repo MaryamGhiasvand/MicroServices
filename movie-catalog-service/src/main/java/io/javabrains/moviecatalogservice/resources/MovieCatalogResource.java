@@ -1,6 +1,7 @@
 package io.javabrains.moviecatalogservice.resources;
 
 import com.netflix.discovery.DiscoveryClient;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.javabrains.moviecatalogservice.models.CatalogItem;
 import io.javabrains.moviecatalogservice.models.Movie;
 import io.javabrains.moviecatalogservice.models.Rating;
@@ -33,6 +34,7 @@ public class MovieCatalogResource {
 
 
     @RequestMapping("/{userId}")
+    @HystrixCommand(fallbackMethod = "getFallbackCatalog") //this is the method if circuit breaks will be called
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
         //create an instance of rest template ( a utility object that is supposed to make rest api call)
         //RestTemplate restTemplate = new RestTemplate();
@@ -67,5 +69,11 @@ public class MovieCatalogResource {
 
                 })
                 .collect(Collectors.toList());
+    }
+    //SHOULD HAVE EXACTLY THE SAME METHOD SIGNATURE
+    public List<CatalogItem> getFallbackCatalog(@PathVariable("userId") String userId){
+        //should be simple hard-coded response => we are sure it never fails 
+        return Arrays.asList(new CatalogItem("no moview","",0));
+
     }
 }
