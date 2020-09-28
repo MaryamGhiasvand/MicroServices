@@ -32,7 +32,7 @@ public class MovieCatalogResource {
         //RestTemplate restTemplate = new RestTemplate();
 
         //1.get all the rated movie id
-        UserRating ratings = restTemplate.getForObject("http://localhost:8083/ratingsdata/users/" +userId,UserRating.class);
+        UserRating ratings = restTemplate.getForObject("http://rating-data-service/ratingsdata/users/" +userId,UserRating.class);
 
         //2."for each movie" id "call info service" and get detail
         return ratings
@@ -42,7 +42,7 @@ public class MovieCatalogResource {
                 //these call are sync => to be async(at the same time) => use webClient
                 .map(rating -> {
                     //"option"+"cmd"+"v" => to create a variable name for it
-                    Movie movie = restTemplate.getForObject("http://localhost:8082/movies/" + rating.getMovieId(), Movie.class);
+                    Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
 
                     //TO GET DATA FROM **** WEB CLIENT ****:
                     //Is a REACTIVE STREAM
