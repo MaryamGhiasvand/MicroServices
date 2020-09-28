@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,7 +22,11 @@ public class MovieCatalogServiceApplication {
 	@LoadBalanced //does service discovery in load balanced way
 	//api gives the service name to restTemplate, to call the Eureka, get the server URl, and make the actual call
 	public RestTemplate getRrRestTemplate(){
-		return new RestTemplate();
+		//return new RestTemplate();
+		//WHEN WE WANT TO SET TIMEOUT FOR RESPONSE OF SERVICE IN REST TEMPLATE
+		HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+		httpRequestFactory.setConnectTimeout(3000); //3 seconds
+		return new RestTemplate(httpRequestFactory);
 	}
 
 	//use weblient instead of RestTemplate
