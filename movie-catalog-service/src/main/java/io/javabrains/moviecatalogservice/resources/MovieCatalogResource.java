@@ -1,5 +1,6 @@
 package io.javabrains.moviecatalogservice.resources;
 
+import com.netflix.discovery.DiscoveryClient;
 import io.javabrains.moviecatalogservice.models.CatalogItem;
 import io.javabrains.moviecatalogservice.models.Movie;
 import io.javabrains.moviecatalogservice.models.Rating;
@@ -21,6 +22,11 @@ public class MovieCatalogResource {
     //if there is more than 1 bean with the same type, we should tag them with qualifier
     //both bean and Autowired
     private RestTemplate restTemplate; //create a property of class of the same type of Bean
+
+    //in this way we can access to discovery client interface, to get info about discovery
+    // instance os service such as URL , port of service and ...
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
