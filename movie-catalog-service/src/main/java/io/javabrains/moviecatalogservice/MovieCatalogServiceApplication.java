@@ -1,9 +1,12 @@
 package io.javabrains.moviecatalogservice;
 
+import com.netflix.appinfo.ApplicationInfoManager;
+import com.netflix.discovery.DiscoveryClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +14,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 @EnableCircuitBreaker
+//also can create an external app and add dependency and this annot =>
+// it will listen to hystrix info from other MSs that has circuit break
+@EnableHystrixDashboard // also makes this app a Hystrix-dashboard
+
 public class MovieCatalogServiceApplication {
 
 	public static void main(String[] args) {
@@ -36,4 +43,9 @@ public class MovieCatalogServiceApplication {
 	public WebClient.Builder getWebClientBuilder(){
 		return WebClient.builder();
 	}
+
+//	@Bean
+//	public DiscoveryClient getDiscoveryClient(){
+//		return new DiscoveryClient(new ApplicationInfoManager());
+//	}
 }
