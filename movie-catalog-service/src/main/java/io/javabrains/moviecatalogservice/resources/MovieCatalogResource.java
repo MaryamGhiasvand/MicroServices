@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/catalog")
+//@RequestMapping("/catalog")
 public class MovieCatalogResource {
     @Autowired //is by type => somewhere there is a bean of type RestTemplate , inject it here
     //if there is more than 1 bean with the same type, we should tag them with qualifier
@@ -26,14 +26,14 @@ public class MovieCatalogResource {
 
     //in this way we can access to discovery client interface, to get info about discovery
     // instance os service such as URL , port of service and ...
-    @Autowired
-    private DiscoveryClient discoveryClient;
+//    @Autowired
+//    private DiscoveryClient discoveryClient;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
 
 
-    @RequestMapping("/{userId}")
+    @RequestMapping("/ttt")
     @HystrixCommand(fallbackMethod = "getFallbackCatalog") //this is the method if circuit breaks will be called
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
         //create an instance of rest template ( a utility object that is supposed to make rest api call)

@@ -20,8 +20,8 @@ public class MovieResources {
 
     @RequestMapping("/{movieId}")
     public Movie getMovieInfo(@PathVariable("movieId") String movieId){
-//        System.out.println("movie Resource");
-//        return new Movie(movieId, "inception");
+
+        //return new Movie(movieId, "inception");
 
         //get info from movie db site:
         String xx=apiKey;
