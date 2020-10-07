@@ -34,7 +34,7 @@ public class MovieCatalogResourceMethodCallBack {
 
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
-        //there is 2 api calling here => better to make them 2 seperated method and have 2 call back calling for every of them
+        //there is 2 api calling here => better to make them 2 separated method and have 2 call back calling for every of them
         //option+cmd+ m to create a method of piece of code.
         UserRating ratings = userRatingInfo.getUserRating(userId);
         return ratings
