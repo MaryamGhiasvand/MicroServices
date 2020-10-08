@@ -28,6 +28,11 @@ public class MovieInfo {
         @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
             //how long the circuit breaker will sleep before it picks up again =5 sec
         @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
+    },
+    threadPoolKey = "movieInfoPool",//Creates separate Bulkhead for this method calling Movie info
+    threadPoolProperties = {
+            @HystrixProperty(name = "coreSize",value = "20"),//the max number of threads waiting for Movie info
+            @HystrixProperty(name = "maxQueueSize", value = "10")//the number of req waiting in the queue before access to thread
     })
     public CatalogItem getCatalogItem(Rating rating) {
         Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
