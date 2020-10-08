@@ -9,6 +9,8 @@ import io.javabrains.moviecatalogservice.models.UserRating;
 import io.javabrains.moviecatalogservice.services.MovieInfo;
 import io.javabrains.moviecatalogservice.services.UserRatingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,8 @@ public class MovieCatalogResourceMethodCallBack {
     @Autowired
     UserRatingInfo userRatingInfo;
 
+    @Autowired
+    private Environment env;
 
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
@@ -47,6 +51,16 @@ public class MovieCatalogResourceMethodCallBack {
                 .collect(Collectors.toList());
     }
 
-    //our separated method
+    //use environment object to get info about configuration
+    //give us option to look up profile information
+    @GetMapping("/environment")
+    public String envDetail(){
+        //we can get the name of active profile/default profile
+        //env.getDefaultProfiles()
+        //env.getProperty()
+        return env.getActiveProfiles().toString();
+
+    }
+
 
 }
