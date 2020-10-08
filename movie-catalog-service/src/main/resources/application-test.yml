@@ -1,0 +1,15 @@
+#create a new place holder for new configuration
+#created a profile called test
+app:
+  name: myApp
+  description: test profile
+
+my:
+  greeting: hello world
+  list:
+    values: One, two, three
+
+db:
+  connection: test-connection-string
+  host: 127.0.0.1
+  port: 1200
